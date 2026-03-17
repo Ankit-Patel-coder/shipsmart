@@ -1,0 +1,88 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  password      String
+  name          String
+  plan          Plan      @default(FREE)
+  imagesUsed    Int       @default(0)
+  imagesLimit   Int       @default(10)
+  razorpayCustomerId String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  uploads       Upload[]
+  subscriptions Subscription[]
+}
+
+model Upload {
+  id            String    @id @default(uuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id])
+  originalName  String
+  originalSize  Int
+  originalUrl   String
+  status        UploadStatus @default(PROCESSING)
+  variantsCount Int       @default(0)
+  variants      Variant[]
+  createdAt     DateTime  @default(now())
+}
+
+model Variant {
+  id          String  @id @default(uuid())
+  uploadId    String
+  upload      Upload  @relation(fields: [uploadId], references: [id])
+  name        String
+  description String
+  fileSize    Int
+  width       Int
+  height      Int
+  url         String
+  score       Int
+  format      String  @default("jpeg")
+  createdAt   DateTime @default(now())
+}
+
+model Subscription {
+  id                  String   @id @default(uuid())
+  userId              String
+  user                User     @relation(fields: [userId], references: [id])
+  razorpayOrderId     String?
+  razorpayPaymentId   String?  @unique
+  razorpaySignature   String?
+  plan                Plan
+  status              SubStatus @default(PENDING)
+  amount              Int
+  currency            String   @default("INR")
+  validFrom           DateTime?
+  validUntil          DateTime?
+  createdAt           DateTime @default(now())
+}
+
+enum Plan {
+  FREE
+  STARTER
+  PRO
+  UNLIMITED
+}
+
+enum UploadStatus {
+  PROCESSING
+  DONE
+  FAILED
+}
+
+enum SubStatus {
+  PENDING
+  ACTIVE
+  EXPIRED
+  FAILED
+}

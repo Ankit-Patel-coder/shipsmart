@@ -1,0 +1,17 @@
+{
+  "name": "shipsmart",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:all":  "cd backend && npm install && cd ../frontend && npm install",
+    "dev":          "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "build":        "cd frontend && npm run build",
+    "start:backend":"cd backend && npm start",
+    "db:migrate":   "cd backend && npm run db:migrate",
+    "db:deploy":    "cd backend && npm run db:deploy",
+    "db:generate":  "cd backend && npm run db:generate"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

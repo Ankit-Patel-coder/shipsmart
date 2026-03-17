@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased;
+    font-family: 'DM Sans', system-ui, sans-serif;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-neutral-300 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-neutral-400; }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-500 hover:bg-brand-600 active:bg-brand-700 text-white text-sm font-medium rounded-xl transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-700 text-sm font-medium rounded-xl transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2 hover:bg-neutral-100 text-neutral-600 text-sm font-medium rounded-lg transition-all duration-150;
+  }
+  .card {
+    @apply bg-white border border-neutral-100 rounded-2xl shadow-sm;
+  }
+  .input {
+    @apply w-full px-3.5 py-2.5 bg-white border border-neutral-200 rounded-xl text-sm placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent transition-all;
+  }
+  .label {
+    @apply block text-sm font-medium text-neutral-700 mb-1.5;
+  }
+  .badge-score-high   { @apply bg-green-50 text-green-700 border border-green-200; }
+  .badge-score-medium { @apply bg-amber-50 text-amber-700 border border-amber-200; }
+  .badge-score-low    { @apply bg-red-50   text-red-700   border border-red-200;   }
+}
+
+/* Razorpay modal z-index fix */
+.razorpay-container { z-index: 9999 !important; }
+
+/* Smooth skeleton shimmer */
+@keyframes shimmer {
+  from { background-position: -200% 0; }
+  to   { background-position:  200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite;
+  border-radius: 8px;
+}
