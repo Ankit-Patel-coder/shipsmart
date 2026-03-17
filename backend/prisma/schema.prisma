@@ -1,4 +1,3 @@
-// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -29,7 +28,7 @@ model Upload {
   user          User      @relation(fields: [userId], references: [id])
   originalName  String
   originalSize  Int
-  originalUrl   String
+  originalUrl   String    @db.Text
   status        UploadStatus @default(PROCESSING)
   variantsCount Int       @default(0)
   variants      Variant[]
@@ -45,7 +44,7 @@ model Variant {
   fileSize    Int
   width       Int
   height      Int
-  url         String
+  url         String  @db.Text
   score       Int
   format      String  @default("jpeg")
   createdAt   DateTime @default(now())
