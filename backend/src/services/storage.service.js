@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { r2, storage, port } = require('../config');
 
-const LOCAL_DIR = path.join(__dirname, '../../uploads');
+const LOCAL_DIR = path.join(process.cwd(), 'uploads');
 if (!fs.existsSync(LOCAL_DIR)) fs.mkdirSync(LOCAL_DIR, { recursive: true });
 
 let s3;
