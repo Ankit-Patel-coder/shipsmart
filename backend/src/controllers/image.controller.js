@@ -223,17 +223,21 @@ async function deleteUpload(req, res) {
     });
     if (!upload) return err(res, 'Upload not found', 404);
 
-    // Remove from storage
-    const keys = [
-      `uploads/${upload.id}/original`,
-      ...upload.variants.map((v) => `uploads/${upload.id}/${v.name.replace(/\s+/g, '-').toLowerCase()}.jpg`),
-    ];
-    await Promise.allSettled(keys.map((k) => storageService.remove(k)));
+    // Try storage cleanup — never block delete if it fails
+    try {
+      await Promise.allSettled(
+        upload.variants.map((v) => storageService.remove(v.url))
+      );
+    } catch (storageErr) {
+      console.warn('[DELETE] Storage cleanup failed (ignored):', storageErr.message);
+    }
 
+    // Always delete from DB
+    await prisma.variant.deleteMany({ where: { uploadId: upload.id } });
     await prisma.upload.delete({ where: { id: upload.id } });
     return ok(res, null, 'Upload deleted');
   } catch (e) {
-    return err(res, 'Could not delete upload', 500);
+    return err(res, 'Could not delete upload: ' + e.message, 500);
   }
 }
 
