@@ -1,9 +1,8 @@
 // src/components/variants/VariantCard.jsx
 import { useState } from 'react'
-import { Download, Star, ZoomIn } from 'lucide-react'
+import { Download, ZoomIn } from 'lucide-react'
 import ScoreBadge, { scoreColor } from '../ui/ScoreBadge'
 import toast from 'react-hot-toast'
-import { imageApi } from '../../lib/api'
 
 function formatBytes(bytes) {
   if (bytes < 1024) return bytes + ' B'
@@ -11,16 +10,15 @@ function formatBytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(2) + ' MB'
 }
 
-export default function VariantCard({ variant, index, uploadId }) {
+export default function VariantCard({ variant, index }) {
   const [downloading, setDownloading] = useState(false)
   const [lightbox, setLightbox] = useState(false)
-  const isTop = index === 0
+  const [hovered, setHovered] = useState(false)
   const c = scoreColor(variant.score)
 
   const handleDownload = async () => {
     try {
       setDownloading(true)
-      // Direct link download
       const a = document.createElement('a')
       a.href = variant.url
       a.download = `shipsmart-${variant.name.replace(/\s+/g, '-').toLowerCase()}-score${variant.score}.jpg`
@@ -35,28 +33,25 @@ export default function VariantCard({ variant, index, uploadId }) {
 
   return (
     <>
-      <div className={`card overflow-hidden flex flex-col transition-shadow hover:shadow-md ${isTop ? 'ring-2 ring-brand-400' : ''}`}>
+      <div
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className={`card overflow-hidden flex flex-col transition-all duration-200 cursor-pointer
+          ${hovered ? 'ring-2 ring-brand-400 shadow-lg scale-[1.02]' : 'hover:shadow-md'}`}
+      >
         {/* Image */}
-        <div className="relative group bg-neutral-50">
+        <div className="relative group bg-neutral-50" onClick={() => setLightbox(true)}>
           <img
             src={variant.url}
             alt={variant.name}
             className="w-full aspect-square object-contain"
             loading="lazy"
           />
-          {isTop && (
-            <div className="absolute top-2 left-2 flex items-center gap-1 bg-brand-500 text-white text-[10px] font-semibold px-2 py-1 rounded-full">
-              <Star size={9} fill="white" /> Best for Meesho
-            </div>
-          )}
-          <button
-            onClick={() => setLightbox(true)}
-            className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-all opacity-0 group-hover:opacity-100"
-          >
+          <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/15 transition-all opacity-0 group-hover:opacity-100">
             <div className="bg-white/90 backdrop-blur-sm rounded-full p-2">
               <ZoomIn size={16} className="text-neutral-800" />
             </div>
-          </button>
+          </div>
         </div>
 
         {/* Body */}
@@ -103,10 +98,7 @@ export default function VariantCard({ variant, index, uploadId }) {
 
       {/* Lightbox */}
       {lightbox && (
-        <div
-          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
-          onClick={() => setLightbox(false)}
-        >
+        <div className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4" onClick={() => setLightbox(false)}>
           <div className="max-w-2xl w-full bg-white rounded-2xl overflow-hidden shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <img src={variant.url} alt={variant.name} className="w-full object-contain max-h-[70vh]" />
             <div className="p-4 flex items-center justify-between">
