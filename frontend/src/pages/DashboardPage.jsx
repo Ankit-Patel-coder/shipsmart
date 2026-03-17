@@ -7,6 +7,15 @@ import ScoreBadge from '../components/ui/ScoreBadge'
 import Skeleton from '../components/ui/Skeleton'
 import { Upload, TrendingUp, Package, Zap, ArrowRight, Clock } from 'lucide-react'
 
+
+function getGreeting() {
+  const hour = new Date().getHours()
+  if (hour < 12) return 'Good morning'
+  if (hour < 17) return 'Good afternoon'
+  if (hour < 21) return 'Good evening'
+  return 'Good night'
+}
+
 function StatCard({ label, value, sub, icon: Icon }) {
   return (
     <div className="card p-5">
@@ -38,7 +47,7 @@ export default function DashboardPage() {
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-neutral-900">Good morning, {user?.name?.split(' ')[0]} 👋</h1>
+          <h1 className="text-2xl font-semibold text-neutral-900">{getGreeting()}, {user?.name?.split(' ')[0]} 👋</h1>
           <p className="text-neutral-500 mt-0.5 text-sm">Here's your ShipSmart overview</p>
         </div>
         <Link to="/upload" className="btn-primary text-sm"><Upload size={14} /> New upload</Link>
