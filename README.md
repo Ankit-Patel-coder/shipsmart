@@ -10,7 +10,7 @@ Built specifically for Meesho sellers to reduce shipping charges automatically.
 [![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-shipsmart--virid.vercel.app-e84c3d?style=flat-square)](https://shipsmart-virid.vercel.app)
 [![Backend](https://img.shields.io/badge/API-Railway-blueviolet?style=flat-square)](https://railway.app)
 [![Frontend](https://img.shields.io/badge/Frontend-Vercel-black?style=flat-square)](https://vercel.com)
-[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+
 
 </div>
 
