@@ -362,12 +362,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
-
----
-
 ## 🙏 Acknowledgements
 
 - [Remove.bg](https://remove.bg) — AI background removal API
