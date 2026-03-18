@@ -347,21 +347,6 @@ shipsmart/
 
 ---
 
-## 🤝 Contributing
-
-Contributions are welcome! Here's how:
-
-1. Fork the repository
-2. Create a branch: `git checkout -b feature/your-feature`
-3. Make your changes
-4. Commit: `git commit -m "Add your feature"`
-5. Push: `git push origin feature/your-feature`
-6. Open a Pull Request
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for more details.
-
----
-
 ## 🙏 Acknowledgements
 
 - [Remove.bg](https://remove.bg) — AI background removal API
